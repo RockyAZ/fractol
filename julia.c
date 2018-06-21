@@ -12,13 +12,12 @@
 
 #include "fractol.h"
 void	julia(t_win *win)
-{write(1, "j\n", 2);
+{
 	t_mandel	man;
 	int			x;
 	int			y;
 	int			i;
 
-	man.lim = ft_min(WIDTH, HEIGHT);
 	y = 0;
 	prepare(win);
 	man.buf_r = 1.5 * (win->mouse.x - WIDTH / 2) / (0.5 * win->zoom * WIDTH) + win->move_x;

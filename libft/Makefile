@@ -86,14 +86,18 @@ OBJECTS = $(SOURCE:.c=.o)
 NAME = libft.a
 RM = rm -f
 
-all: $(NAME)
+all: print $(NAME)
+	@printf "\033[0;32m\n\n\nLIBFT DONE\n\n"
+
+print:
+	@printf "\033[0;32mSTART LOADING LIBFT\n\n\n"
 
 $(NAME): $(OBJECTS)
 	@ar rc $(NAME) $(OBJECTS)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
-		@printf "\033[0;31m >_<\n"
+		@printf "\033[0;31m ->"
 clean:
 	@$(RM) $(OBJECTS)
 	@printf "\033[0;35m\

@@ -28,11 +28,10 @@
 #include <stdio.h>
 typedef struct		s_mandel
 {
-	int				lim;
 	double			rn[2];
 	double			in[2];
 	double			buf_r;
-	double			buf_i;	
+	double			buf_i;
 }					t_mandel;
 
 typedef struct		s_mouse

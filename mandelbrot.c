@@ -19,7 +19,6 @@ void	mandelbrot(t_win *win)
 	int			y;
 	int			i;
 
-	man.lim = ft_min(WIDTH, HEIGHT);
 	y = 0;
 	prepare(win);
 	while (y < HEIGHT)

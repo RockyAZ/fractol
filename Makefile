@@ -20,19 +20,22 @@ LIBFT = include/libft.a
 OBJDIR = ./obj/
 
 all: obj $(LIBFT) $(NAME)
+	@printf "\033[0;32m\nFRACTOL DONE\n\n"
 
 obj:
 	@mkdir -p $(OBJDIR)
 
 $(OBJDIR)%.o: %.c $(HEADER)
-	@printf "\033[0;34m T_T\n"
+	@printf "\033[0;34m->    "
 	gcc -I ./libft/ -o $@ -c $<   #flags
+	@printf "\n"
 
 $(NAME): $(OBJECTS)
 	@gcc -o $(NAME) $(OBJECTS) -lm -L libft/ -lft -lmlx -framework OpenGL -framework AppKit
 
 $(LIBFT):
 	@make -C ./libft/
+	@printf "\033[0;32m\n\n|||||||||||||||||||||\nSTART LOADING FRACTOL\n|||||||||||||||||||||\n\n\n\n"	
 
 clean:
 	@/bin/rm -f $(OBJECTS)
