@@ -11,18 +11,25 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
-void	julia(t_win *win)
+
+/*
+** using t_mouse as simple coordinates structure
+*/
+void	*thread_julia(void *vod)
 {
 	t_mandel	man;
+	t_win		*win;
+	int			i;
 	int			x;
 	int			y;
-	int			i;
+	int			lim_y;
 
-	y = 0;
-	prepare(win);
+	win = (t_win*)vod;
 	man.buf_r = 1.5 * (win->mouse.x - WIDTH / 2) / (0.5 * win->zoom * WIDTH) + win->move_x;
 	man.buf_i = (win->mouse.y - HEIGHT / 2) / (0.5 * win->zoom * HEIGHT) + win->move_y;
-	while (y < HEIGHT)
+	y = win->y;
+	lim_y = win->lim_y;
+	while (y < lim_y)
 	{
 		x = 0;
 		while (x < WIDTH)
@@ -45,5 +52,27 @@ void	julia(t_win *win)
 		}
 		y++;
 	}
+	return (0);
+}
+
+void	julia(t_win *win)
+{
+	int			i;
+	int			dive;
+	pthread_t	tid[THREAD];
+
+	i = 0;
+	dive = HEIGHT / THREAD;
+	prepare_draw(win);
+	while (i < THREAD)
+	{
+		printf("%d\n", i);
+		pthread_create(&tid[i], NULL, thread_julia, (void*)win);
+		i++;
+printf("==============\n");
+	}
+	i = 0;
+	while (i++ < THREAD)
+		pthread_join(tid[i], NULL);
 	drawing(win);
 }

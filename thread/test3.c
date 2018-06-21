@@ -28,7 +28,8 @@ void *myThreadFun(void *vargp)
 
 	// Change static and global variables
 	++s; ++g;
-
+for(int j = 0; j < 2000000; j++)
+	;
 	// Print the argument, static and global variables
 	printf("Thread ID: %d, Static: %d, Global: %d\n", *myid, s, g);
 	return 0;
@@ -36,20 +37,22 @@ void *myThreadFun(void *vargp)
 
 int main()
 {
-	int i;
+	int i = 0;
 	pthread_t tid;
 
 	// Let us create three threads
-	for (i = 0; i < 3; i++)
+	while (i < 10)
 	{
-		pthread_create(&tid, NULL, myThreadFun, (void *)&i);
+		pthread_create(&tid, NULL, myThreadFun, (void*)&i);
 		printf("=====================\n");
+		i++;
 	}
+//		pthread_join(tid, NULL);	
+	pthread_exit(NULL);
+
 	printf("////////////////////////////\n");
 //		pthread_create(&tid, NULL, myThreadFun, (void *)&i);
 //		pthread_create(&tid, NULL, myThreadFun, (void *)&i);
 //		pthread_create(&tid, NULL, myThreadFun, (void *)&i);
-	
-	pthread_exit(NULL);
 	return 0;
 }

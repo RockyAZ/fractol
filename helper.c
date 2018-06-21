@@ -18,7 +18,7 @@ void	preparation(t_win *win, char *av)
 		error("mlx init error");
 	if ((win->win_ptr = mlx_new_window(win->mlx_ptr, WIDTH, HEIGHT, "THE WINDOW")) == NULL)
 		error("open windows error");
-	if (WIDTH / THREAD * THREAD != WIDTH)
+	if (HEIGHT / THREAD * THREAD != HEIGHT)
 		error("invalid number of threads");
 	win->iter = 256;
 	win->zoom = 0.9;

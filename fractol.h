@@ -40,6 +40,13 @@ typedef struct		s_mouse
 	int				y;
 }					t_mouse;
 
+typedef struct		s_thread
+{
+	int				y;
+	int				lim_y;
+	struct s_thread *next;
+}					t_thread;
+
 typedef struct		s_win
 {
     void			*mlx_ptr;
@@ -54,6 +61,7 @@ typedef struct		s_win
 	double			move_x;
 	double			move_y;
 	t_mouse			mouse;
+	///////
 }					t_win;
 
 /*
@@ -65,7 +73,7 @@ void				julia(t_win *win);
 /*
 ** drawing
 */
-void				prepare(t_win *win);
+void				prepare_draw(t_win *win);
 void				set_pixel(int x, int y, int i, t_win *win);
 void				drawing(t_win *win);
 
@@ -79,4 +87,5 @@ void				error(char *str);
 ** mouse
 */
 int					mouse_move(int x, int y, t_win *win);
+
 #endif

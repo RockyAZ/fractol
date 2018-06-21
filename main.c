@@ -14,6 +14,7 @@
 
 static int	ft_exit(t_win *win)
 {
+	system("leaks fractol");
 	exit(EXIT_SUCCESS);
 	return (0);
 }
@@ -28,7 +29,7 @@ int			 main(int ac, char **av)
 		return (0);
 	}
 	if ((win = (t_win*)malloc(sizeof(t_win))) == NULL)
-		error("win malloc error");
+		error("t_win malloc error");
 	preparation(win, av[1]);
 	mlx_hook(win->win_ptr, 3, 0, &ft_exit, (void*)win);
 	mlx_hook(win->win_ptr, 17, 0, &ft_exit, (void*)win);

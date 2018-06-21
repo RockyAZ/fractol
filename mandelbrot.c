@@ -20,7 +20,7 @@ void	mandelbrot(t_win *win)
 	int			i;
 
 	y = 0;
-	prepare(win);
+	prepare_draw(win);
 	while (y < HEIGHT)
 	{
 		x = 0;
