@@ -12,7 +12,13 @@
 
 NAME = fractol
 #FLAGS = -Wall -Wextra -Werror
-SOURCE = main.c mandelbrot.c draw.c julia.c mouse.c helper.c error.c
+SOURCE = main.c \
+		draw.c \
+		julia.c \
+		mouse.c \
+		helper.c \
+		error.c
+#		mandelbrot.c		
 
 HEADER = fractol.h
 OBJECTS = $(addprefix $(OBJDIR),$(SOURCE:.c=.o))

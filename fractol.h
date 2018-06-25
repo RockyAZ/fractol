@@ -16,7 +16,7 @@
 # define WIDTH 1200
 # define HEIGHT 800
 
-# define THREAD 8
+# define THREAD 1
 
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
@@ -26,6 +26,21 @@
 #include <math.h>
 #include <pthread.h>
 #include <stdio.h>
+typedef struct		s_image
+{
+	void			*img_ptr;
+	int				bpp;
+	int				size_line;
+	int				endian;
+	unsigned char	*ptr;	
+}					t_image;
+
+typedef struct		s_mouse
+{
+	int				x;
+	int				y;
+}					t_mouse;
+
 typedef struct		s_mandel
 {
 	double			rn[2];
@@ -34,38 +49,32 @@ typedef struct		s_mandel
 	double			buf_i;
 }					t_mandel;
 
-typedef struct		s_mouse
-{
-	int				x;
-	int				y;
-}					t_mouse;
-
 typedef struct		s_thread
 {
 	int				y;
 	int				lim_y;
-	struct s_thread *next;
+	int				size_line;
+	unsigned char	*img_ptr;
+	int				iter;
+	double			zoom;
+	double			move_x;
+	double			move_y;
+	t_mouse			*mouse;
+//////////////////
+	int i;	
 }					t_thread;
 
 typedef struct		s_win
 {
     void			*mlx_ptr;
 	void			*win_ptr;
-	void			*img_ptr;
-	int				bpp;
-	int				size_line;
-	int				endian;
-	unsigned char	*ptr;
-	int				iter;
-	double			zoom;
-	double			move_x;
-	double			move_y;
+	t_image			img;
 	t_mouse			mouse;
-	///////
+	t_thread		thread[THREAD];
 }					t_win;
 
 /*
-**	main
+**	main functions
 */
 void				mandelbrot(t_win *win);
 void				julia(t_win *win);
@@ -74,13 +83,13 @@ void				julia(t_win *win);
 ** drawing
 */
 void				prepare_draw(t_win *win);
-void				set_pixel(int x, int y, int i, t_win *win);
+void				set_pixel(int x, int y, int i, t_thread *win);
 void				drawing(t_win *win);
 
 /*
 **	helper && error
 */
-void				preparation(t_win *win, char *av);
+void				main_preparation(t_win *win, char *av);
 void				error(char *str);
 
 /*

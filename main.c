@@ -30,7 +30,7 @@ int			 main(int ac, char **av)
 	}
 	if ((win = (t_win*)malloc(sizeof(t_win))) == NULL)
 		error("t_win malloc error");
-	preparation(win, av[1]);
+	main_preparation(win, av[1]);
 	mlx_hook(win->win_ptr, 3, 0, &ft_exit, (void*)win);
 	mlx_hook(win->win_ptr, 17, 0, &ft_exit, (void*)win);
 	mlx_hook(win->win_ptr, 6, 0, &mouse_move, (void*)win);

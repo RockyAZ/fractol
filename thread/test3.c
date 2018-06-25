@@ -17,6 +17,10 @@
 // Let us create a global variable to change it in threads
 int g = 0;
 
+
+pthread_mutex_t	mutex = PTHREAD_MUTEX_INITIALIZER;
+
+
 // The function to be executed by all threads
 void *myThreadFun(void *vargp)
 {
@@ -28,8 +32,7 @@ void *myThreadFun(void *vargp)
 
 	// Change static and global variables
 	++s; ++g;
-for(int j = 0; j < 2000000; j++)
-	;
+
 	// Print the argument, static and global variables
 	printf("Thread ID: %d, Static: %d, Global: %d\n", *myid, s, g);
 	return 0;
@@ -37,22 +40,23 @@ for(int j = 0; j < 2000000; j++)
 
 int main()
 {
-	int i = 0;
+	int i;
 	pthread_t tid;
+//	pthread_mutex_t	mutex;
 
+	pthread_mutex_init(&mutex, NULL);
+	pthread_mutex_trylock(&mutex);
 	// Let us create three threads
-	while (i < 10)
+	for (i = 0; i < 10; i++)
 	{
-		pthread_create(&tid, NULL, myThreadFun, (void*)&i);
+		pthread_create(&tid, NULL, myThreadFun, (void *)&i);
 		printf("=====================\n");
-		i++;
 	}
-//		pthread_join(tid, NULL);	
-	pthread_exit(NULL);
-
 	printf("////////////////////////////\n");
 //		pthread_create(&tid, NULL, myThreadFun, (void *)&i);
 //		pthread_create(&tid, NULL, myThreadFun, (void *)&i);
 //		pthread_create(&tid, NULL, myThreadFun, (void *)&i);
+//	pthread_mutex_unlock(&mutex);
+	pthread_exit(NULL);
 	return 0;
 }

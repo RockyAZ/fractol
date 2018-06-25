@@ -14,22 +14,22 @@
 
 void	prepare_draw(t_win *win)
 {
-	win->img_ptr = mlx_new_image(win->mlx_ptr, WIDTH, HEIGHT);
-	win->ptr = (unsigned char*)mlx_get_data_addr(win->img_ptr, &win->bpp, &win->size_line, &win->endian);
+	win->img.img_ptr = mlx_new_image(win->mlx_ptr, WIDTH, HEIGHT);
+	win->img.ptr = (unsigned char*)mlx_get_data_addr(win->img.img_ptr,
+	&win->img.bpp, &win->img.size_line, &win->img.endian);
 }
 
-void	set_pixel(int x, int y, int i, t_win *win)
+void	set_pixel(int x, int y, int i, t_thread *thr)
 {
 	int p;
-
-	p = (x * 4) + (y * win->size_line);
-	win->ptr[p] = i % 256 * (i < win->iter);
-	win->ptr[++p] = 255 * (i < win->iter);
-	win->ptr[++p] = 255 * (i < win->iter);
+	p = (x * 4) + (y * thr->size_line);
+	thr->img_ptr[p] = (255 - i) * (i < thr->iter);
+	thr->img_ptr[++p] = i % 255 * (i < thr->iter);
+	thr->img_ptr[++p] = i % 255 * (i < thr->iter);
 }
 
 void	drawing(t_win *win)
 {
-	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img_ptr, 0, 0);
-	mlx_destroy_image(win->mlx_ptr, win->img_ptr);
+	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img.img_ptr, 0, 0);
+	mlx_destroy_image(win->mlx_ptr, win->img.img_ptr);
 }

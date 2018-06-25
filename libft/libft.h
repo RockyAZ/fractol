@@ -6,7 +6,7 @@
 /*   By: azaporoz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 17:14:08 by azaporoz          #+#    #+#             */
-/*   Updated: 2018/06/04 20:35:58 by azaporoz         ###   ########.fr       */
+/*   Updated: 2018/06/25 20:07:50 by azaporoz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,5 @@ int					ft_abs(int i);
 int					ft_count_words(char *str);
 int					ft_max(int a, int b);
 int					ft_min(int a, int b);
+void				ft_putnbr_end(int nb);
 #endif
