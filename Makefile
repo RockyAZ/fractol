@@ -17,8 +17,9 @@ SOURCE = main.c \
 		julia.c \
 		mouse.c \
 		helper.c \
-		error.c
-#		mandelbrot.c		
+		error.c \
+		mandelbrot.c \
+		ft_keys.c \
 
 HEADER = fractol.h
 OBJECTS = $(addprefix $(OBJDIR),$(SOURCE:.c=.o))

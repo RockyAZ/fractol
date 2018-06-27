@@ -14,7 +14,7 @@
 
 void	*thread_julia(void *wi)
 {
-	t_mandel	man;
+	t_julia		jul;
 	t_thread	*thr;
 	int			i;
 	int			x;
@@ -27,16 +27,16 @@ void	*thread_julia(void *wi)
 		x = 0;
 		while (x < WIDTH)
 		{
-			man.rn[1] = 1.5 * (x - WIDTH / 2) / (0.5 * thr->zoom * WIDTH) + thr->move_x;
-			man.in[1] = (y - HEIGHT / 2) / (0.5 * thr->zoom * HEIGHT) + thr->move_y;
+			jul.rn[1] = 1.5 * (x - WIDTH / 2) / (0.5 * thr->zoom * WIDTH) + thr->move_x;
+			jul.in[1] = (y - HEIGHT / 2) / (0.5 * thr->zoom * HEIGHT) + thr->move_y;
 			i = 0;
 			while (i < thr->iter)
 			{
-				man.rn[0] = man.rn[1];
-				man.in[0] = man.in[1];
-				man.rn[1] = ((man.rn[0] * man.rn[0]) - (man.in[0] * man.in[0])) + thr->buf_r;
-				man.in[1] = 2 * man.rn[0] * man.in[0] + thr->buf_i;
-				if ((man.rn[1] * man.rn[1] + man.in[1] * man.in[1]) > 4)
+				jul.rn[0] = jul.rn[1];
+				jul.in[0] = jul.in[1];
+				jul.rn[1] = ((jul.rn[0] * jul.rn[0]) - (jul.in[0] * jul.in[0])) + thr->buf_r;
+				jul.in[1] = 2 * jul.rn[0] * jul.in[0] + thr->buf_i;
+				if ((jul.rn[1] * jul.rn[1] + jul.in[1] * jul.in[1]) > 4)
 					break ;
 				i++;
 			}

@@ -25,6 +25,7 @@ int			mouse_move(int x, int y, t_win *win)
 		win->thread[i].buf_i = (win->thread->mouse.y - HEIGHT / 2) / (0.5 * win->thread->zoom * HEIGHT) + win->thread->move_y;
 		i++;
 	}
-	julia(win);
+	if (win->fract_id == 1)
+		julia(win);
 	return (0);
 }

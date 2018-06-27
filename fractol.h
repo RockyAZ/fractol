@@ -16,12 +16,13 @@
 # define WIDTH 1000
 # define HEIGHT 800
 
-# define THREAD 4
+# define THREAD 1
 
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
 
 #include "./libft/libft.h"
+#include "keys.h"
 #include <mlx.h>
 #include <math.h>
 #include <pthread.h>
@@ -32,7 +33,7 @@ typedef struct		s_image
 	int				bpp;
 	int				size_line;
 	int				endian;
-	unsigned char	*ptr;	
+	unsigned char	*ptr;
 }					t_image;
 
 typedef struct		s_mouse
@@ -41,12 +42,18 @@ typedef struct		s_mouse
 	int				y;
 }					t_mouse;
 
+typedef struct		s_julia
+{
+	double			rn[2];
+	double			in[2];
+}					t_julia;
+
 typedef struct		s_mandel
 {
 	double			rn[2];
 	double			in[2];
-	// double			buf_r;
-	// double			buf_i;
+	double			buf_r;
+	double			buf_i;
 }					t_mandel;
 
 typedef struct		s_thread
@@ -62,17 +69,20 @@ typedef struct		s_thread
 	t_mouse			mouse;
 	double			buf_r;
 	double			buf_i;
-//////////////////
-	int i;	
 }					t_thread;
+/*
+**	win->fract_id == 1 -> JULIA
+**	win->fract_id == 2 -> MANDELBROT
+*/
 
 typedef struct		s_win
 {
     void			*mlx_ptr;
 	void			*win_ptr;
 	t_image			img;
-//	t_mouse			mouse;
+	int				fract_id;
 	t_thread		thread[THREAD];
+	////////////////////////
 }					t_win;
 
 /*
@@ -80,6 +90,7 @@ typedef struct		s_win
 */
 void				mandelbrot(t_win *win);
 void				julia(t_win *win);
+int					ft_exit(t_win *win);
 
 /*
 ** drawing
@@ -93,10 +104,13 @@ void				drawing(t_win *win);
 */
 void				main_preparation(t_win *win, char *av);
 void				error(char *str);
-
 /*
-** mouse
+** reboot picture by presing [R]
+*/
+void				make_thread(t_win *win);
+/*
+** mouse & keys
 */
 int					mouse_move(int x, int y, t_win *win);
-
+int					ft_keyhook(int key, t_win *win);
 #endif
