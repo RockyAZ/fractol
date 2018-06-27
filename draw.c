@@ -22,14 +22,19 @@ void	prepare_draw(t_win *win)
 void	set_pixel(int x, int y, int i, t_thread *thr)
 {
 	int p;
+	
 	p = (x * 4) + (y * thr->size_line);
+	// thr->img_ptr[p] = (255 - i) * (i < thr->iter);
+	// thr->img_ptr[++p] = i % 255 * (i < thr->iter);
+	// thr->img_ptr[++p] = i % 255 * (i < thr->iter);
 	thr->img_ptr[p] = (255 - i) * (i < thr->iter);
 	thr->img_ptr[++p] = i % 255 * (i < thr->iter);
 	thr->img_ptr[++p] = i % 255 * (i < thr->iter);
+
 }
 
 void	drawing(t_win *win)
 {
 	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img.img_ptr, 0, 0);
-	mlx_destroy_image(win->mlx_ptr, win->img.img_ptr);
+//	mlx_destroy_image(win->mlx_ptr, win->img.img_ptr);
 }

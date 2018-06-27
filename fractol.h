@@ -13,10 +13,10 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# define WIDTH 1200
+# define WIDTH 1000
 # define HEIGHT 800
 
-# define THREAD 1
+# define THREAD 4
 
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
@@ -45,8 +45,8 @@ typedef struct		s_mandel
 {
 	double			rn[2];
 	double			in[2];
-	double			buf_r;
-	double			buf_i;
+	// double			buf_r;
+	// double			buf_i;
 }					t_mandel;
 
 typedef struct		s_thread
@@ -59,7 +59,9 @@ typedef struct		s_thread
 	double			zoom;
 	double			move_x;
 	double			move_y;
-	t_mouse			*mouse;
+	t_mouse			mouse;
+	double			buf_r;
+	double			buf_i;
 //////////////////
 	int i;	
 }					t_thread;
@@ -69,7 +71,7 @@ typedef struct		s_win
     void			*mlx_ptr;
 	void			*win_ptr;
 	t_image			img;
-	t_mouse			mouse;
+//	t_mouse			mouse;
 	t_thread		thread[THREAD];
 }					t_win;
 

@@ -14,8 +14,17 @@
 
 int			mouse_move(int x, int y, t_win *win)
 {
-    win->mouse.x = x;
-    win->mouse.y = y;
+	int i;
+
+	i = 0;
+	while (i < THREAD)
+	{
+		win->thread[i].mouse.x = x;
+		win->thread[i].mouse.y = y;
+		win->thread[i].buf_r = 1.5 * (win->thread->mouse.x - WIDTH / 2) / (0.5 * win->thread->zoom * WIDTH) + win->thread->move_x;
+		win->thread[i].buf_i = (win->thread->mouse.y - HEIGHT / 2) / (0.5 * win->thread->zoom * HEIGHT) + win->thread->move_y;
+		i++;
+	}
 	julia(win);
 	return (0);
 }

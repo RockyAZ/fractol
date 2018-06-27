@@ -35,6 +35,7 @@ $(OBJDIR)%.o: %.c $(HEADER)
 	@printf "\033[0;34m->    "
 	gcc -I ./libft/ -o $@ -c $<   #flags
 	@printf "\n"
+#-pthread
 
 $(NAME): $(OBJECTS)
 	@gcc -o $(NAME) $(OBJECTS) -lm -L libft/ -lft -lmlx -framework OpenGL -framework AppKit
