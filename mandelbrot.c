@@ -39,7 +39,7 @@ void	*thread_mandelbrot(void *wi)
 				man.in[0] = man.in[1];
 				man.rn[1] = man.rn[0] * man.rn[0] - man.in[0] * man.in[0] + man.buf_r;
 				man.in[1] = 2 * man.rn[0] * man.in[0] + man.buf_i;
-				if ((man.rn[1] * man.rn[1] + man.in[1] * man.in[1]) > 4)
+				if ((man.rn[1] * man.rn[1] + man.in[1] * man.in[1]) > 8)
 					break ;
 				i++;
 			}

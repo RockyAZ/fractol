@@ -12,46 +12,61 @@
 
 #include "fractol.h"
 
-void	ft_reboot_fractol(t_win *win)
+void	ft_iter_size(int key, t_win *win)
 {
-	make_thread(win);
-	if (win->fract_id == 1)
-		julia(win);
-	else if (win->fract_id == 2)
-		mandelbrot(win);
+	int i;
+
+	i = 0;
+	if (key == KEY_MULTI || key == KEY_DIV)
+	{
+		while (i < THREAD)
+		{
+			if (key == KEY_MULTI)
+				win->thread[i].iter += 1;
+			if (key == KEY_DIV && win->thread[i].iter > 1)
+				win->thread[i].iter -= 1;
+			i++;
+		}
+	}
 }
 
 void	ft_scal_coord(int key, t_win *win)
 {
+	int i;
+
+	i = 0;
 	if (key == KEY_PLUS || key == KEY_MINUS)
 	{
-		if (key == KEY_PLUS)
-			win->thread->zoom += 0.1;
-		if (key == KEY_MINUS)
-			win->thread->zoom -= 0.1;
-		if (win->fract_id == 1)
-			julia(win);
-		else if (win->fract_id == 2)
-			mandelbrot(win);
+		while (i < THREAD)
+		{
+			if (key == KEY_PLUS)
+				win->thread[i].zoom += 0.5;
+			if (key == KEY_MINUS)
+				win->thread[i].zoom -= 0.5;
+			i++;
+		}
 	}
 }
 
 void	ft_move_coord(int key, t_win *win)
 {
+	int i;
+
+	i = 0;
 	if (key == KEY_LEFT || key == KEY_RIGHT || key == KEY_DOWN || key == KEY_UP)
 	{
-		if (key == KEY_LEFT)
-			win->thread->move_x += 0.2;
-		if (key == KEY_RIGHT)
-			win->thread->move_x -= 0.2;
-		if (key == KEY_UP)
-			win->thread->move_y += 0.2;
-		if (key == KEY_DOWN)
-			win->thread->move_y -= 0.2;
-		if (win->fract_id == 1)
-			julia(win);
-		else if (win->fract_id == 2)
-			mandelbrot(win);
+		while (i < THREAD)
+		{
+			if (key == KEY_LEFT)
+				win->thread[i].move_x += 0.2;
+			if (key == KEY_RIGHT)
+				win->thread[i].move_x -= 0.2;
+			if (key == KEY_UP)
+				win->thread[i].move_y += 0.2;
+			if (key == KEY_DOWN)
+				win->thread[i].move_y -= 0.2;
+			i++;
+		}
 	}
 }
 
@@ -61,7 +76,19 @@ int		ft_keyhook(int key, t_win *win)
 		ft_exit(win);
 	ft_move_coord(key, win);
 	ft_scal_coord(key, win);
+	ft_iter_size(key, win);
 	if (key == KEY_R)
-		ft_reboot_fractol(win);
+		make_thread(win);
+	if (key == KEY_T)
+		win->is_text *= -1;
+	if (key == KEY_SPACE)
+		win->mouse_julia *= -1;
+/*
+**
+*/
+	if (win->fract_id == 1)
+		julia(win);
+	else if (win->fract_id == 2)
+		mandelbrot(win);
 	return (0);
 }

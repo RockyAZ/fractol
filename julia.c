@@ -54,6 +54,7 @@ void	julia(t_win *win)
 	pthread_t tid[THREAD];
 
 	i = 0;
+	prepare_draw(win);
 	while (i < THREAD)
 	{
 		pthread_create(&tid[i], NULL, &thread_julia, &win->thread[i]);

@@ -12,14 +12,23 @@
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
-
-# define WIDTH 1000
+/*
+** 2500
+** 1300
+*/
+# define WIDTH 1200
 # define HEIGHT 800
 
-# define THREAD 1
+# define THREAD 8
 
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
+# define WHITE 0xFFFFFF
+# define RED 0xff170f
+# define GREEN 0x00FF00
+# define BLUE 0x0000FF
+# define PINK 0xFF00FF
+# define YELLOW 0xfff305
 
 #include "./libft/libft.h"
 #include "keys.h"
@@ -27,14 +36,14 @@
 #include <math.h>
 #include <pthread.h>
 #include <stdio.h>
-typedef struct		s_image
-{
-	void			*img_ptr;
-	int				bpp;
-	int				size_line;
-	int				endian;
-	unsigned char	*ptr;
-}					t_image;
+// typedef struct		s_image
+// {
+// 	void			*img_ptr;
+// 	int				bpp;
+// 	int				size_line;
+// 	int				endian;
+// 	unsigned char	*ptr;
+// }					t_image;
 
 typedef struct		s_mouse
 {
@@ -60,6 +69,7 @@ typedef struct		s_thread
 {
 	int				y;
 	int				lim_y;
+	int				dive;
 	int				size_line;
 	unsigned char	*img_ptr;
 	int				iter;
@@ -79,8 +89,18 @@ typedef struct		s_win
 {
     void			*mlx_ptr;
 	void			*win_ptr;
-	t_image			img;
+	void			*img_ptr;
+	int				bpp;
+	int				size_line;
+	int				endian;
+	unsigned char	*ptr;
+	int				mouse_down;
+	t_mouse			mouse_main;
+	t_mouse			mouse_button;
+	int				mouse_julia;
+	int				is_text;
 	int				fract_id;
+	char 			*name;
 	t_thread		thread[THREAD];
 	////////////////////////
 }					t_win;
@@ -109,8 +129,15 @@ void				error(char *str);
 */
 void				make_thread(t_win *win);
 /*
+**	mooving && scrolling
+*/
+void				ft_scal_coord(int key, t_win *win);
+void				ft_move_coord(int key, t_win *win);
+/*
 ** mouse & keys
 */
+int					mouse_down(int button, int x, int y, t_win *win);
+int					mouse_up(int button, int x, int y, t_win *win);
 int					mouse_move(int x, int y, t_win *win);
 int					ft_keyhook(int key, t_win *win);
 #endif

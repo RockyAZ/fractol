@@ -13,6 +13,9 @@
 #ifndef KEYS_H
 # define KEYS_H
 
+/*
+** keyboard keys
+*/
 # define KEY_UP 126
 # define KEY_DOWN 125
 # define KEY_LEFT 123
@@ -27,20 +30,18 @@
 # define KEY_TAB 48
 # define KEY_MULTI 67
 # define KEY_DIV 75
-
-/*
-** addition buttons
-*/
 # define KEY_ESC 53
 # define KEY_R 15
 # define KEY_G 5
 # define KEY_B 11
 # define KEY_ENTER 36
 # define KEY_C 8
-
+# define KEY_T 17
+# define KEY_SPACE 49
 /*
 ** mouse buttons
 */
+# define MOUSE_MAIN 1
 # define MOUSE_SCROLL_RIGHT 6
 # define MOUSE_SCROLL_LEFT 7
 # define MOUSE_SCROLL_UP 5

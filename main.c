@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
-
+//using pthread_cancel when pressing some buttons again???
 int	ft_exit(t_win *win)
 {
 	system("leaks fractol");
@@ -25,14 +25,16 @@ int	main(int ac, char **av)
 
 	if (ac == 1 || ac > 3)
 	{
-		error("invalid number of arguments");
+		error("invalid number of arguments\nUsage:   ./fraclol [name of fractal]");
 		return (0);
 	}
 	if ((win = (t_win*)malloc(sizeof(t_win))) == NULL)
 		error("t_win malloc error");
 	main_preparation(win, av[1]);
-	mlx_hook(win->win_ptr, 3, 0, &ft_keyhook, (void*)win);
+	mlx_hook(win->win_ptr, 2, 0, &ft_keyhook, (void*)win);
 	mlx_hook(win->win_ptr, 17, 0, &ft_exit, (void*)win);
+	mlx_hook(win->win_ptr, 4, 0, &mouse_down, (void*)win);
+	mlx_hook(win->win_ptr, 5, 0, &mouse_up, (void*)win);	
 	mlx_hook(win->win_ptr, 6, 0, &mouse_move, (void*)win);
 	mlx_loop(win->mlx_ptr);
 }

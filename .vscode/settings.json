@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "fractol.h": "c"
+        "fractol.h": "c",
+        "keys.h": "c",
+        "libft.h": "c"
     }
 }

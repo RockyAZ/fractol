@@ -23,14 +23,13 @@ void	make_thread(t_win *win)
 	{
 		win->thread[i].y = i * dive;
 		win->thread[i].lim_y = win->thread[i].y + dive;
-		win->thread[i].iter = 40;
+		win->thread[i].iter = 5;
 		win->thread[i].zoom = 0.9;
 		win->thread[i].move_x = 0;
 		win->thread[i].move_y = 0;
 		win->thread[i].mouse.x = 500;
 		win->thread[i].mouse.y = 400;
-//		win->thread[i].size_line = win->img.size_line;
-//		win->thread[i].img_ptr = win->img.ptr;
+		win->thread[i].dive = dive;
 		i++;
 	}
 }
@@ -39,10 +38,14 @@ void		main_preparation(t_win *win, char *av)
 {
 	if ((win->mlx_ptr = mlx_init()) == NULL)
 		error("mlx init error");
-	if ((win->win_ptr = mlx_new_window(win->mlx_ptr, WIDTH, HEIGHT, ft_itoa(THREAD))) == NULL)
+	if ((win->win_ptr = mlx_new_window(win->mlx_ptr, WIDTH, HEIGHT, av)) == NULL)
 		error("window open error");
 	if (HEIGHT / THREAD * THREAD != HEIGHT || THREAD < 1)
 		error("invalid number of threads");
+	win->mouse_down = 0;
+	win->is_text = 1;
+	win->name = av;
+	win->mouse_julia = 1;
 	make_thread(win);
 	if (!(ft_strcmp(av, "julia")))
 	{
