@@ -33,9 +33,22 @@ void	set_pixel(int x, int y, int i, t_thread *thr)
 	int p;
 
 	p = (x * 4) + (y * thr->size_line);
-	thr->img_ptr[p] = (255 - i) * (i < thr->iter);
-	thr->img_ptr[++p] = (255 - i) * (i < thr->iter);
-	thr->img_ptr[++p] = (255 - i) * (i < thr->iter);
+//чуть более крутой фиолетовый разлом
+	// thr->img_ptr[p] = (255 % (i + 1));
+	// thr->img_ptr[++p] = 255 / (i + 1);
+	// thr->img_ptr[++p] = 510 % (i + 1);
+//фиолетовый разлом но хуевый зеленый фон
+	// thr->img_ptr[p] = (128 % (i + 1));
+	// thr->img_ptr[++p] = 255 / (i + 1);
+	// thr->img_ptr[++p] = 510 % (i + 1) * (i < thr->iter);
+//умеренная наркомания
+	// thr->img_ptr[p] = (i % 256);
+	// thr->img_ptr[++p] = 255 / (i + 1);
+	// thr->img_ptr[++p] = 255 * (i < thr->iter);
+//разлитая краска
+	// thr->img_ptr[p] = (i % 256);//  * (i < thr->iter);
+	// thr->img_ptr[++p] = 255;// * (i < thr->iter);
+	// thr->img_ptr[++p] = 255 * (i < thr->iter);
 }
 
 void	ft_str_window(t_win *win)

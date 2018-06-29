@@ -23,7 +23,7 @@ void	make_thread(t_win *win)
 	{
 		win->thread[i].y = i * dive;
 		win->thread[i].lim_y = win->thread[i].y + dive;
-		win->thread[i].iter = 5;
+		win->thread[i].iter = 128;
 		win->thread[i].zoom = 0.9;
 		win->thread[i].move_x = 0;
 		win->thread[i].move_y = 0;
