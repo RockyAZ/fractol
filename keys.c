@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_keys.c                                          :+:      :+:    :+:   */
+/*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azaporoz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/27 16:04:24 by azaporoz          #+#    #+#             */
-/*   Updated: 2018/06/27 18:04:08 by azaporoz         ###   ########.fr       */
+/*   Created: 2018/07/03 14:12:26 by azaporoz          #+#    #+#             */
+/*   Updated: 2018/07/03 14:12:27 by azaporoz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,35 +17,57 @@ void	ft_iter_size(int key, t_win *win)
 	int i;
 
 	i = 0;
-	if (key == KEY_MULTI || key == KEY_DIV)
+	while (i < THREAD && (key == KEY_MULTI || key == KEY_DIV))
 	{
-		while (i < THREAD)
+		if (key == KEY_MULTI)
 		{
-			if (key == KEY_MULTI)
+			if (win->thread[i].iter > 0 && win->thread[i].iter < 120)
 				win->thread[i].iter += 1;
-			if (key == KEY_DIV && win->thread[i].iter > 1)
-				win->thread[i].iter -= 1;
-			i++;
+			else if (win->thread[i].iter > 120 && win->thread[i].iter < 300)
+				win->thread[i].iter += 10;
+			else if (win->thread[i].iter > 300 && win->thread[i].iter < 700)
+				win->thread[i].iter += 22;
+			else
+				win->thread[i].iter += 50;			
 		}
+		else if (key == KEY_DIV && win->thread[i].iter > 1)
+		{
+			if (win->thread[i].iter > 0 && win->thread[i].iter < 120)
+				win->thread[i].iter -= 1;
+			else if (win->thread[i].iter > 121 && win->thread[i].iter < 300)
+				win->thread[i].iter -= 12;
+			else
+				win->thread[i].iter -= 25;
+		}
+		i++;
 	}
 }
 
 void	ft_scal_coord(int key, t_win *win)
 {
 	int i;
+	int bul;
 
 	i = 0;
-	if (key == KEY_PLUS || key == KEY_MINUS)
+	bul = 0;
+	while (i < THREAD && (key == KEY_PLUS || key == KEY_MINUS))
 	{
-		while (i < THREAD)
+		if (key == KEY_PLUS && win->zoom_id + 1 < ZOOM)
 		{
-			if (key == KEY_PLUS)
-				win->thread[i].zoom += 0.5;
-			if (key == KEY_MINUS)
-				win->thread[i].zoom -= 0.5;
-			i++;
+			bul = 1;
+			win->thread[i].zoom = win->zooms[win->zoom_id + 1];
 		}
+		else if (key == KEY_MINUS && win->zoom_id - 1 >= 0)
+		{
+			bul = -1;
+			win->thread[i].zoom = win->zooms[win->zoom_id - 1];
+		}
+		i++;
 	}
+	if (bul == 1)
+		win->zoom_id++;
+	else if (bul == -1 && win->zoom_id - 1 >= 0)
+		win->zoom_id--;
 }
 
 void	ft_move_coord(int key, t_win *win)
@@ -58,13 +80,13 @@ void	ft_move_coord(int key, t_win *win)
 		while (i < THREAD)
 		{
 			if (key == KEY_LEFT)
-				win->thread[i].move_x += 0.2;
+				win->thread[i].move_x -= 0.01;
 			if (key == KEY_RIGHT)
-				win->thread[i].move_x -= 0.2;
+				win->thread[i].move_x += 0.01;
 			if (key == KEY_UP)
-				win->thread[i].move_y += 0.2;
+				win->thread[i].move_y -= 0.01;
 			if (key == KEY_DOWN)
-				win->thread[i].move_y -= 0.2;
+				win->thread[i].move_y += 0.01;
 			i++;
 		}
 	}
@@ -83,9 +105,8 @@ int		ft_keyhook(int key, t_win *win)
 		win->is_text *= -1;
 	if (key == KEY_SPACE)
 		win->mouse_julia *= -1;
-/*
-**
-*/
+	if (key == KEY_ENTER)
+		win->color_id++;
 	if (win->fract_id == 1)
 		julia(win);
 	else if (win->fract_id == 2)

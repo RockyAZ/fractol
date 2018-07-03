@@ -6,7 +6,7 @@
 #    By: azaporoz <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/19 14:30:13 by azaporoz          #+#    #+#              #
-#    Updated: 2018/06/19 14:30:14 by azaporoz         ###   ########.fr        #
+#    Updated: 2018/07/03 14:15:28 by azaporoz         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -19,7 +19,7 @@ SOURCE = main.c \
 		helper.c \
 		error.c \
 		mandelbrot.c \
-		ft_keys.c \
+		keys.c \
 
 HEADER = fractol.h
 OBJECTS = $(addprefix $(OBJDIR),$(SOURCE:.c=.o))

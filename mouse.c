@@ -30,7 +30,7 @@ int			mouse_up(int button, int x, int y, t_win *win)
 	(void)button;
 	win->mouse_down = 0;
 	if (x == win->mouse_button.x && y == win->mouse_button.y)
-		ft_scal_coord(KEY_PLUS, win);
+		ft_keyhook(KEY_PLUS, win);
 	win->mouse_button.x = x;
 	win->mouse_button.y = y;
 	return (0);

@@ -33,10 +33,17 @@ void	set_pixel(int x, int y, int i, t_thread *thr)
 	int p;
 
 	p = (x * 4) + (y * thr->size_line);
+	thr->img_ptr[p] = thr->zoom * (thr->mouse.x + thr->mouse.y) / (i + 1);
+	thr->img_ptr[++p] = (255 * ((thr->mouse.x + 1) + (thr->mouse.y + 1)) / (i + 1));
+	thr->img_ptr[++p] = (300 * ((thr->mouse.x + 1) + (thr->mouse.y + 1)) / (i + 1));
+//grey
+	// thr->img_ptr[p] = (255 / (i + 1));//blue
+	// thr->img_ptr[++p] = 255 / (i + 1);//green
+	// thr->img_ptr[++p] = 255 / (i + 1);//red
 //чуть более крутой фиолетовый разлом
-	// thr->img_ptr[p] = (255 % (i + 1));
-	// thr->img_ptr[++p] = 255 / (i + 1);
-	// thr->img_ptr[++p] = 510 % (i + 1);
+	// thr->img_ptr[p] = (255 % (i + 1));//blue
+	// thr->img_ptr[++p] = 255 / (i + 1);//green
+	// thr->img_ptr[++p] = 510 % (i + 1);//red
 //фиолетовый разлом но хуевый зеленый фон
 	// thr->img_ptr[p] = (128 % (i + 1));
 	// thr->img_ptr[++p] = 255 / (i + 1);
@@ -46,8 +53,8 @@ void	set_pixel(int x, int y, int i, t_thread *thr)
 	// thr->img_ptr[++p] = 255 / (i + 1);
 	// thr->img_ptr[++p] = 255 * (i < thr->iter);
 //разлитая краска
-	// thr->img_ptr[p] = (i % 256);//  * (i < thr->iter);
-	// thr->img_ptr[++p] = 255;// * (i < thr->iter);
+	// thr->img_ptr[p] = 256 * (i < thr->iter);
+	// thr->img_ptr[++p] = 255 * (i < thr->iter);
 	// thr->img_ptr[++p] = 255 * (i < thr->iter);
 }
 
@@ -65,7 +72,10 @@ void	ft_str_window(t_win *win)
 	if (win->mouse_julia == 1)
 		mlx_string_put(win->mlx_ptr, win->win_ptr, 0, 60, PINK, "MOUSE ON");
 	else if (win->mouse_julia == -1)
-		mlx_string_put(win->mlx_ptr, win->win_ptr, 0, 60, PINK, "MOUSE OFF");		
+		mlx_string_put(win->mlx_ptr, win->win_ptr, 0, 60, PINK, "MOUSE OFF");
+	free(iter);
+	mlx_string_put(win->mlx_ptr, win->win_ptr, 0, 80, BLUE, "ZOOM:");	
+	mlx_string_put(win->mlx_ptr, win->win_ptr, 50, 80, BLUE, iter = ft_itoa((int)win->thread[0].zoom));
 	free(iter);
 	free(thread);
 }

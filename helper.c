@@ -12,6 +12,21 @@
 
 #include "fractol.h"
 
+void	make_zoom(t_win *win)
+{
+	int		i;
+	double	cp;
+
+	i = 0;
+	cp = 0.2;
+	while (i < ZOOM)
+	{
+		win->zooms[i] = cp;
+		cp *= 1.1;
+		i++;
+	}
+}
+
 void	make_thread(t_win *win)
 {
 	int i;
@@ -23,8 +38,8 @@ void	make_thread(t_win *win)
 	{
 		win->thread[i].y = i * dive;
 		win->thread[i].lim_y = win->thread[i].y + dive;
-		win->thread[i].iter = 128;
-		win->thread[i].zoom = 0.9;
+		win->thread[i].iter = 80;
+		win->thread[i].zoom = 0.2;
 		win->thread[i].move_x = 0;
 		win->thread[i].move_y = 0;
 		win->thread[i].mouse.x = 500;
@@ -46,7 +61,10 @@ void		main_preparation(t_win *win, char *av)
 	win->is_text = 1;
 	win->name = av;
 	win->mouse_julia = 1;
+	win->color_id = 0;
+	win->zoom_id = 0;
 	make_thread(win);
+	make_zoom(win);
 	if (!(ft_strcmp(av, "julia")))
 	{
 		win->fract_id = 1;

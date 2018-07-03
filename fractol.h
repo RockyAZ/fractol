@@ -21,6 +21,8 @@
 
 # define THREAD 8
 
+# define ZOOM 700
+
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
@@ -36,14 +38,6 @@
 #include <math.h>
 #include <pthread.h>
 #include <stdio.h>
-// typedef struct		s_image
-// {
-// 	void			*img_ptr;
-// 	int				bpp;
-// 	int				size_line;
-// 	int				endian;
-// 	unsigned char	*ptr;
-// }					t_image;
 
 typedef struct		s_mouse
 {
@@ -83,6 +77,7 @@ typedef struct		s_thread
 /*
 **	win->fract_id == 1 -> JULIA
 **	win->fract_id == 2 -> MANDELBROT
+**	win->fract_id == 3 -> BURNINGSHIP
 */
 
 typedef struct		s_win
@@ -100,9 +95,11 @@ typedef struct		s_win
 	int				mouse_julia;
 	int				is_text;
 	int				fract_id;
+	int				color_id;
 	char 			*name;
 	t_thread		thread[THREAD];
-	////////////////////////
+	double			zooms[ZOOM];
+	int				zoom_id;
 }					t_win;
 
 /*
