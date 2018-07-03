@@ -41,7 +41,7 @@ int			mouse_move(int x, int y, t_win *win)
 	int i;
 
 	i = 0;
-	while (i < THREAD && win->fract_id == 1 && win->mouse_julia == 1)
+	while (i < THREAD && (win->fract_id == 1 || win->fract_id == 3) && win->mouse_julia == 1)
 	{
 		win->thread[i].mouse.x = x;
 		win->thread[i].mouse.y = y;
@@ -51,6 +51,8 @@ int			mouse_move(int x, int y, t_win *win)
 	}
 	if (win->fract_id == 1 && win->mouse_julia == 1)
 		julia(win);
+	else if (win->fract_id == 3 && win->mouse_julia == 1)
+		julia_3d(win);	
 	win->mouse_main.x = x;
 	win->mouse_main.y = y;
 	return (0);

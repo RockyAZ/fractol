@@ -77,7 +77,7 @@ typedef struct		s_thread
 /*
 **	win->fract_id == 1 -> JULIA
 **	win->fract_id == 2 -> MANDELBROT
-**	win->fract_id == 3 -> BURNINGSHIP
+**	win->fract_id == 3 -> 3D JULIA
 */
 
 typedef struct		s_win
@@ -107,7 +107,7 @@ typedef struct		s_win
 */
 void				mandelbrot(t_win *win);
 void				julia(t_win *win);
-int					ft_exit(t_win *win);
+void				julia_3d(t_win *win);
 
 /*
 ** drawing
@@ -121,6 +121,7 @@ void				drawing(t_win *win);
 */
 void				main_preparation(t_win *win, char *av);
 void				error(char *str);
+int					ft_exit(t_win *win);
 /*
 ** reboot picture by presing [R]
 */

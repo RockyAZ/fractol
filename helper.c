@@ -18,7 +18,7 @@ void	make_zoom(t_win *win)
 	double	cp;
 
 	i = 0;
-	cp = 0.2;
+	cp = 0.1;
 	while (i < ZOOM)
 	{
 		win->zooms[i] = cp;
@@ -47,6 +47,11 @@ void	make_thread(t_win *win)
 		win->thread[i].dive = dive;
 		i++;
 	}
+	win->mouse_down = 0;
+	win->is_text = 1;
+	win->mouse_julia = 1;
+	win->color_id = 0;
+	win->zoom_id = 0;
 }
 
 void		main_preparation(t_win *win, char *av)
@@ -57,12 +62,7 @@ void		main_preparation(t_win *win, char *av)
 		error("window open error");
 	if (HEIGHT / THREAD * THREAD != HEIGHT || THREAD < 1)
 		error("invalid number of threads");
-	win->mouse_down = 0;
-	win->is_text = 1;
 	win->name = av;
-	win->mouse_julia = 1;
-	win->color_id = 0;
-	win->zoom_id = 0;
 	make_thread(win);
 	make_zoom(win);
 	if (!(ft_strcmp(av, "julia")))
@@ -74,6 +74,11 @@ void		main_preparation(t_win *win, char *av)
 	{
 		win->fract_id = 2;
 		mandelbrot(win);
+	}
+	else if (!(ft_strcmp(av, "julia_3d")))
+	{
+		win->fract_id = 3;
+		julia_3d(win);
 	}
 	else
 		error("invalid name.\n\nNames to use:\n-mandelbrot\n-julia");

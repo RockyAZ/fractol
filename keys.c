@@ -108,5 +108,7 @@ int		ft_keyhook(int key, t_win *win)
 		julia(win);
 	else if (win->fract_id == 2)
 		mandelbrot(win);
+	else if (win->fract_id == 3)
+		julia_3d(win);
 	return (0);
 }
