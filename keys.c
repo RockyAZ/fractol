@@ -75,20 +75,17 @@ void	ft_move_coord(int key, t_win *win)
 	int i;
 
 	i = 0;
-	if (key == KEY_LEFT || key == KEY_RIGHT || key == KEY_DOWN || key == KEY_UP)
+	while (i < THREAD && (key == KEY_LEFT || key == KEY_RIGHT || key == KEY_DOWN || key == KEY_UP))
 	{
-		while (i < THREAD)
-		{
-			if (key == KEY_LEFT)
-				win->thread[i].move_x -= 0.01;
-			if (key == KEY_RIGHT)
-				win->thread[i].move_x += 0.01;
-			if (key == KEY_UP)
-				win->thread[i].move_y -= 0.01;
-			if (key == KEY_DOWN)
-				win->thread[i].move_y += 0.01;
-			i++;
-		}
+		if (key == KEY_LEFT)
+			win->thread[i].move_x -= 0.01;
+		if (key == KEY_RIGHT)
+			win->thread[i].move_x += 0.01;
+		if (key == KEY_UP)
+			win->thread[i].move_y -= 0.01;
+		if (key == KEY_DOWN)
+			win->thread[i].move_y += 0.01;
+		i++;
 	}
 }
 
