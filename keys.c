@@ -21,6 +21,8 @@ void	ft_some_keys(int key, t_win *win)
 		make_thread(win);
 	if (key == KEY_T)
 		win->is_text *= -1;
+	if (key == KEY_SHIFT_RIGHT)
+		win->thr_color *= -1;
 	if (key == KEY_SPACE)
 		win->mouse_julia *= -1;
 	while (key == KEY_ENTER && i < THREAD)
@@ -127,7 +129,7 @@ int		ft_keyhook(int key, t_win *win)
 }
 /*
 normal reboot            [V]
-normal color changer     [X]
+normal color changer     [Y]
 normal mouse-zoom        [X]
 epilepsy warning         [X]
 */

@@ -16,7 +16,7 @@ void	set_color_1(t_thread *thr, int p, int i)
 {
 	if (thr->color_id == 0)
 	{
-		thr->img_ptr[p] = 256 * (i < thr->iter);
+		thr->img_ptr[p] = 255 * (i < thr->iter);
 		thr->img_ptr[++p] = 255 * (i < thr->iter);
 		thr->img_ptr[++p] = 255 * (i < thr->iter);
 	}
@@ -29,8 +29,8 @@ void	set_color_1(t_thread *thr, int p, int i)
 	else if (thr->color_id == 2)
 	{
 		thr->img_ptr[p] = (255 % (i + 1));
-		thr->img_ptr[++p] = 20 / (i + 1);
-		thr->img_ptr[++p] = 510 % (i + 1);
+		thr->img_ptr[++p] = 50 / (i + 1);
+		thr->img_ptr[++p] = 710 % (i + 1);
 	}
 }
 
@@ -56,10 +56,15 @@ void	set_color_2(t_thread *thr, int p, int i)
 	}
 }
 
+/*
+** why if() -> if else() = color error
+*/
+
 void	what_color(t_thread *thr, int p, int i)
 {
 	if (thr->color_id >= 0 || thr->color_id <= 2)
 		set_color_1(thr, p, i);
 	if (thr->color_id >= 3 || thr->color_id <= 5)
 		set_color_2(thr, p, i);
+	
 }

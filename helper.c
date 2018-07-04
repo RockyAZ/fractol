@@ -18,13 +18,40 @@ void	make_zoom(t_win *win)
 	double	cp;
 
 	i = 0;
-	cp = 0.1;
+	cp = 0.3;
 	while (i < ZOOM)
 	{
 		win->zooms[i] = cp;
 		cp *= 1.1;
 		i++;
 	}
+}
+
+void	make_win(t_win *win)
+{
+	win->mouse_down = 0;
+	win->is_text = 1;
+	win->mouse_julia = 1;
+	win->zoom_id = 0;
+	win->move_size = 0.2;
+}
+
+int		make_threads_color(int i)
+{
+	if (i >= COLORS)
+	{
+		while (i >= COLORS && i > 0)
+			i -= COLORS;
+		if (i >= 0)
+			return (i);
+		else
+		{
+			while (i < 0)
+				i++;
+			return (i);
+		}
+	}
+	return (i);
 }
 
 void	make_thread(t_win *win)
@@ -39,20 +66,19 @@ void	make_thread(t_win *win)
 		win->thread[i].y = i * dive;
 		win->thread[i].lim_y = win->thread[i].y + dive;
 		win->thread[i].iter = 80;
-		win->thread[i].zoom = 0.1;
+		win->thread[i].zoom = 0.3;
 		win->thread[i].move_x = 0;
 		win->thread[i].move_y = 0;
-		win->thread[i].color_id = 0;
+		if (win->thr_color == 1)
+			win->thread[i].color_id = make_threads_color(i);
+		else if (win->thr_color == -1)
+			win->thread[i].color_id = 0;
 		win->thread[i].mouse.x = WIDTH / 2;
 		win->thread[i].mouse.y = HEIGHT / 2;
 		win->thread[i].dive = dive;
 		i++;
 	}
-	win->mouse_down = 0;
-	win->is_text = 1;
-	win->mouse_julia = 1;
-	win->zoom_id = 0;
-	win->move_size = 0.2;
+	make_win(win);
 }
 
 void		main_preparation(t_win *win, char *av)
@@ -64,6 +90,7 @@ void		main_preparation(t_win *win, char *av)
 	if (HEIGHT / THREAD * THREAD != HEIGHT || THREAD < 1)
 		error("invalid number of threads");
 	win->name = av;
+	win->thr_color = -1;
 	make_thread(win);
 	make_zoom(win);
 	if (!(ft_strcmp(av, "julia")))

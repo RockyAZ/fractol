@@ -19,7 +19,7 @@
 # define WIDTH 1200
 # define HEIGHT 800
 
-# define THREAD 8
+# define THREAD 4
 # define ZOOM 700
 # define COLORS 6
 /*
@@ -106,6 +106,7 @@ typedef struct		s_win
 	double			zooms[ZOOM];
 	int				zoom_id;
 	double			move_size;
+	int				thr_color;
 }					t_win;
 
 /*

@@ -13,7 +13,7 @@
 #include "fractol.h"
 
 void	*thread_julia_3d(void *wi)
-{write(1, "a\n",2 );
+{
 	t_julia		jul;
 	t_thread	*thr;
 	int			i;
@@ -27,8 +27,6 @@ void	*thread_julia_3d(void *wi)
 		x = 0;
 		while (x < WIDTH)
 		{
-			// jul.rn[1] = 1.5 * (x - WIDTH / 2) / (0.5 * thr->zoom * WIDTH) + thr->move_x;
-			// jul.in[1] = (y - HEIGHT / 2) / (0.5 * thr->zoom * HEIGHT) + thr->move_y;
 			jul.rn[1] = 1.5 * (x - WIDTH / 2) / (0.5 * (thr->zoom + thr->buf_r) * WIDTH) + thr->move_x;
 			jul.in[1] = (y - HEIGHT / 2) / (0.5 * (thr->zoom + thr->buf_i) * HEIGHT) + thr->move_y;
 			i = 0;
