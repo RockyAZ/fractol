@@ -33,16 +33,17 @@ void	set_pixel(int x, int y, int i, t_thread *thr)
 	int p;
 
 	p = (x * 4) + (y * thr->size_line);
-	thr->img_ptr[p] = thr->zoom * (thr->mouse.x + thr->mouse.y) / (i + 1);
-	thr->img_ptr[++p] = (255 * ((thr->mouse.x + 1) + (thr->mouse.y + 1)) / (i + 1));
-	thr->img_ptr[++p] = (300 * ((thr->mouse.x + 1) + (thr->mouse.y + 1)) / (i + 1));
+	what_color(thr, p, i);
+	// thr->img_ptr[p] = thr->zoom * (thr->mouse.x + thr->mouse.y) / (i + 1);
+	// thr->img_ptr[++p] = (255 * ((thr->mouse.x + 1) + (thr->mouse.y + 1)) / (i + 1));
+	// thr->img_ptr[++p] = (300 * ((thr->mouse.x + 1) + (thr->mouse.y + 1)) / (i + 1));
 //grey
 	// thr->img_ptr[p] = (255 / (i + 1));//blue
 	// thr->img_ptr[++p] = 255 / (i + 1);//green
 	// thr->img_ptr[++p] = 255 / (i + 1);//red
 //чуть более крутой фиолетовый разлом
 	// thr->img_ptr[p] = (255 % (i + 1));//blue
-	// thr->img_ptr[++p] = 255 / (i + 1);//green
+	// thr->img_ptr[++p] = 20 / (i + 1);//green
 	// thr->img_ptr[++p] = 510 % (i + 1);//red
 //фиолетовый разлом но хуевый зеленый фон
 	// thr->img_ptr[p] = (128 % (i + 1));

@@ -12,6 +12,26 @@
 
 #include "fractol.h"
 
+void	ft_some_keys(int key, t_win *win)
+{
+	int i;
+
+	i = 0;
+	if (key == KEY_R)
+		make_thread(win);
+	if (key == KEY_T)
+		win->is_text *= -1;
+	if (key == KEY_SPACE)
+		win->mouse_julia *= -1;
+	while (key == KEY_ENTER && i < THREAD)
+	{
+		win->thread[i].color_id += 1;
+		if (win->thread[i].color_id >= COLORS)
+			win->thread[i].color_id = 0;
+		i++;
+	}
+}
+
 void	ft_iter_size(int key, t_win *win)
 {
 	int i;
@@ -28,16 +48,14 @@ void	ft_iter_size(int key, t_win *win)
 			else if (win->thread[i].iter > 300 && win->thread[i].iter < 700)
 				win->thread[i].iter += 22;
 			else
-				win->thread[i].iter += 50;			
+				win->thread[i].iter += 50;
 		}
 		else if (key == KEY_DIV && win->thread[i].iter > 1)
 		{
 			if (win->thread[i].iter > 0 && win->thread[i].iter < 120)
 				win->thread[i].iter -= 1;
 			else if (win->thread[i].iter > 121 && win->thread[i].iter < 300)
-				win->thread[i].iter -= 12;
-			else
-				win->thread[i].iter -= 25;
+				win->thread[i].iter -= 18;
 		}
 		i++;
 	}
@@ -56,11 +74,13 @@ void	ft_scal_coord(int key, t_win *win)
 		{
 			bul = 1;
 			win->thread[i].zoom = win->zooms[win->zoom_id + 1];
+			win->move_size /= 1.011;
 		}
 		else if (key == KEY_MINUS && win->zoom_id - 1 >= 0)
 		{
 			bul = -1;
 			win->thread[i].zoom = win->zooms[win->zoom_id - 1];
+			win->move_size *= 1.011;
 		}
 		i++;
 	}
@@ -78,13 +98,13 @@ void	ft_move_coord(int key, t_win *win)
 	while (i < THREAD && (key == KEY_LEFT || key == KEY_RIGHT || key == KEY_DOWN || key == KEY_UP))
 	{
 		if (key == KEY_LEFT)
-			win->thread[i].move_x -= 0.01;
+			win->thread[i].move_x -= win->move_size;
 		if (key == KEY_RIGHT)
-			win->thread[i].move_x += 0.01;
+			win->thread[i].move_x += win->move_size;
 		if (key == KEY_UP)
-			win->thread[i].move_y -= 0.01;
+			win->thread[i].move_y -= win->move_size;
 		if (key == KEY_DOWN)
-			win->thread[i].move_y += 0.01;
+			win->thread[i].move_y += win->move_size;
 		i++;
 	}
 }
@@ -96,14 +116,7 @@ int		ft_keyhook(int key, t_win *win)
 	ft_move_coord(key, win);
 	ft_scal_coord(key, win);
 	ft_iter_size(key, win);
-	if (key == KEY_R)
-		make_thread(win);
-	if (key == KEY_T)
-		win->is_text *= -1;
-	if (key == KEY_SPACE)
-		win->mouse_julia *= -1;
-	if (key == KEY_ENTER)
-		win->color_id++;
+	ft_some_keys(key, win);
 	if (win->fract_id == 1)
 		julia(win);
 	else if (win->fract_id == 2)
@@ -112,3 +125,9 @@ int		ft_keyhook(int key, t_win *win)
 		julia_3d(win);
 	return (0);
 }
+/*
+normal reboot            [V]
+normal color changer     [X]
+normal mouse-zoom        [X]
+epilepsy warning         [X]
+*/

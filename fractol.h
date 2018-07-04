@@ -20,9 +20,14 @@
 # define HEIGHT 800
 
 # define THREAD 8
-
 # define ZOOM 700
-
+# define COLORS 6
+/*
+** COLORS:
+** 1->blue
+** 2->green
+** 3->red
+*/
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
@@ -73,6 +78,7 @@ typedef struct		s_thread
 	t_mouse			mouse;
 	double			buf_r;
 	double			buf_i;
+	int				color_id;	
 }					t_thread;
 /*
 **	win->fract_id == 1 -> JULIA
@@ -95,11 +101,11 @@ typedef struct		s_win
 	int				mouse_julia;
 	int				is_text;
 	int				fract_id;
-	int				color_id;
 	char 			*name;
 	t_thread		thread[THREAD];
 	double			zooms[ZOOM];
 	int				zoom_id;
+	double			move_size;
 }					t_win;
 
 /*
@@ -121,6 +127,7 @@ void				drawing(t_win *win);
 */
 void				main_preparation(t_win *win, char *av);
 void				error(char *str);
+void				what_color(t_thread *thr, int p, int i);
 int					ft_exit(t_win *win);
 /*
 ** reboot picture by presing [R]

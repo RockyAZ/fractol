@@ -21,6 +21,7 @@ SOURCE = main.c \
 		mandelbrot.c \
 		keys.c \
 		julia_3d.c \
+		colors.c \
 
 HEADER = fractol.h
 OBJECTS = $(addprefix $(OBJDIR),$(SOURCE:.c=.o))

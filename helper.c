@@ -39,19 +39,20 @@ void	make_thread(t_win *win)
 		win->thread[i].y = i * dive;
 		win->thread[i].lim_y = win->thread[i].y + dive;
 		win->thread[i].iter = 80;
-		win->thread[i].zoom = 0.2;
+		win->thread[i].zoom = 0.1;
 		win->thread[i].move_x = 0;
 		win->thread[i].move_y = 0;
-		win->thread[i].mouse.x = 500;
-		win->thread[i].mouse.y = 400;
+		win->thread[i].color_id = 0;
+		win->thread[i].mouse.x = WIDTH / 2;
+		win->thread[i].mouse.y = HEIGHT / 2;
 		win->thread[i].dive = dive;
 		i++;
 	}
 	win->mouse_down = 0;
 	win->is_text = 1;
 	win->mouse_julia = 1;
-	win->color_id = 0;
 	win->zoom_id = 0;
+	win->move_size = 0.2;
 }
 
 void		main_preparation(t_win *win, char *av)
