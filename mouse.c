@@ -72,7 +72,7 @@ int		mouse_move(int x, int y, t_win *win)
 	i = 0;
 	while (i < THREAD)
 	{
-		if ((win->fract_id == 1 || win->fract_id == 3) && win->mouse_down == 0)
+		if ((win->fract_id == 1 || win->fract_id == 3) && win->fract_id == 1 && win->mouse_down == 0)
 		{
 			win->thread[i].buf_r = make_complex(win->thread[i].mouse.x, 0, win, 'r');
 			win->thread[i].buf_i = make_complex(0, win->thread[i].mouse.y, win, 'i');
@@ -81,9 +81,9 @@ int		mouse_move(int x, int y, t_win *win)
 		win->thread[i].mouse.y = y;
 		i++;
 	}
-	if (win->fract_id == 1 && win->mouse_julia == 1)
+	if (win->fract_id == 1 && (win->mouse_julia == 1|| win->mouse_down == 1))
 		julia(win);
-	else if (win->fract_id == 3 && win->mouse_julia == 1)
+	if (win->fract_id == 3 && (win->mouse_julia == 1|| win->mouse_down == 1))
 		julia_3d(win);
 	return (0);
 }
