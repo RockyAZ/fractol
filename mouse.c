@@ -64,17 +64,15 @@ int		mouse_move(int x, int y, t_win *win)
 		{
 			if (x1 < x || x1 > x)
 				win->thread[i].move_x += make_complex(x1, 0, win, 'r') - make_complex(x, 0, win, 'r');
-			else if (y1 < y)
-				win->thread[i].move_y += make_complex(y1, 0, win, 'i') - make_complex(y, 0, win, 'i');
-			else if (y1 > y)
-				win->thread[i].move_y += make_complex(y1, 0, win, 'i') - make_complex(y, 0, win, 'i');
+			if (y1 < y || y1 > y)
+				win->thread[i].move_y += make_complex(0, y1, win, 'i') - make_complex(0, y, win, 'i');
 			i++;
 		}
 	}
 	i = 0;
 	while (i < THREAD)
 	{
-		if ((win->fract_id == 1 || win->fract_id == 3) && win->mouse_julia == 1 && win->mouse_down == 0)
+		if ((win->fract_id == 1 || win->fract_id == 3) && win->mouse_down == 0)
 		{
 			win->thread[i].buf_r = make_complex(win->thread[i].mouse.x, 0, win, 'r');
 			win->thread[i].buf_i = make_complex(0, win->thread[i].mouse.y, win, 'i');
