@@ -38,8 +38,10 @@ void	set_color_2(t_thread *thr, int p, int i)
 {
 	if (thr->color_id == 3)
 	{
-		thr->img_ptr[p] = (128 % (i + 1));
-		thr->img_ptr[++p] = 255 / (i + 1);
+
+//		256 % 100
+		thr->img_ptr[p] = (256 % (i + 1));
+		thr->img_ptr[++p] = 1000 / (i + 1);
 		thr->img_ptr[++p] = 510 % (i + 1) * (i < thr->iter);
 	}
 	else if (thr->color_id == 4)
@@ -65,6 +67,5 @@ void	what_color(t_thread *thr, int p, int i)
 	if (thr->color_id >= 0 || thr->color_id <= 2)
 		set_color_1(thr, p, i);
 	if (thr->color_id >= 3 || thr->color_id <= 5)
-		set_color_2(thr, p, i);
-	
+		set_color_2(thr, p, i);	
 }

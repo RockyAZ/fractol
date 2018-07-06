@@ -15,15 +15,17 @@
 /*
 ** 2500
 ** 1300
+** *= 1.025;
 */
 # define WIDTH 1200
 # define HEIGHT 800
 
-# define THREAD 4
+# define THREAD 8
 # define ZOOM 700
 # define COLORS 6
+# define FRACTOLS 4
 /*
-** COLORS:
+** COLORS IN MLX_IMAGE:
 ** 1->blue
 ** 2->green
 ** 3->red
@@ -56,6 +58,13 @@ typedef struct		s_julia
 	double			in[2];
 }					t_julia;
 
+typedef struct		s_burning
+{
+	double			z[2];
+	double			c[2];
+	double			temp[2];
+}					t_burning;
+
 typedef struct		s_mandel
 {
 	double			rn[2];
@@ -84,6 +93,7 @@ typedef struct		s_thread
 **	win->fract_id == 1 -> JULIA
 **	win->fract_id == 2 -> MANDELBROT
 **	win->fract_id == 3 -> 3D JULIA
+**	win->fract_id == 4 -> BURNINGSHIP
 */
 
 typedef struct		s_win
@@ -96,17 +106,16 @@ typedef struct		s_win
 	int				endian;
 	unsigned char	*ptr;
 	int				mouse_down;
-	t_mouse			mouse_main;
 	t_mouse			mouse_button;
 	int				mouse_julia;
 	int				is_text;
 	int				fract_id;
-	char 			*name;
 	t_thread		thread[THREAD];
 	double			zooms[ZOOM];
 	int				zoom_id;
 	double			move_size;
 	int				thr_color;
+	int				first_color;
 }					t_win;
 
 /*
@@ -115,6 +124,7 @@ typedef struct		s_win
 void				mandelbrot(t_win *win);
 void				julia(t_win *win);
 void				julia_3d(t_win *win);
+void				burningship(t_win *win);
 
 /*
 ** drawing
@@ -130,15 +140,13 @@ void				main_preparation(t_win *win, char *av);
 void				error(char *str);
 void				what_color(t_thread *thr, int p, int i);
 int					ft_exit(t_win *win);
+
 /*
-** reboot picture by presing [R]
-*/
-void				make_thread(t_win *win);
-/*
-**	mooving && scrolling
+**	mooving && scaling
 */
 void				ft_scal_coord(int key, t_win *win);
 void				ft_move_coord(int key, t_win *win);
+
 /*
 ** mouse & keys
 */
@@ -146,4 +154,12 @@ int					mouse_down(int button, int x, int y, t_win *win);
 int					mouse_up(int button, int x, int y, t_win *win);
 int					mouse_move(int x, int y, t_win *win);
 int					ft_keyhook(int key, t_win *win);
+
+/*
+** making
+*/
+void				make_zoom(t_win *win);
+void				make_win(t_win *win);
+int					make_threads_color(int i);
+void				make_thread(t_win *win);
 #endif

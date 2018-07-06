@@ -13,8 +13,8 @@
 #include "fractol.h"
 
 void	*thread_burningship(void *wi)
-{
-	t_julia		jul;
+{write(1, "b\n",2);
+	t_burning	bur;
 	t_thread	*thr;
 	int			i;
 	int			x;
@@ -27,17 +27,21 @@ void	*thread_burningship(void *wi)
 		x = 0;
 		while (x < WIDTH)
 		{
-			jul.rn[1] = 1.5 * (x - WIDTH / 2) / (0.5 * thr->zoom * WIDTH) + thr->move_x;
-			jul.in[1] = (y - HEIGHT / 2) / (0.5 * thr->zoom * HEIGHT) + thr->move_y;
+			bur.z[0] = 1.5 * (x - WIDTH / 2) / (0.5 * thr->zoom * WIDTH) + thr->move_x;
+			bur.z[1] = (y - HEIGHT / 2) / (0.5 * thr->zoom * HEIGHT) + thr->move_y;
+			bur.c[0] = bur.z[0];
+			bur.c[1] = bur.z[1];
 			i = 0;
 			while (i < thr->iter)
 			{
-				jul.rn[0] = jul.rn[1];
-				jul.in[0] = jul.in[1];
-				jul.rn[1] = ((jul.rn[0] * jul.rn[0]) - (jul.in[0] * jul.in[0])) + thr->buf_r;
-				jul.in[1] = 2 * jul.rn[0] * jul.in[0] + thr->buf_i;
-				if ((jul.rn[1] * jul.rn[1] + jul.in[1] * jul.in[1]) > 4)
+				bur.z[0] = fabs(bur.z[0]);
+				bur.z[1] = fabs(bur.z[1]);
+				bur.temp[0] = bur.z[0] * bur.z[0] - bur.z[1] * bur.z[1] + bur.c[0];
+				bur.temp[1] = bur.z[0] * bur.z[1] * 2 + bur.c[1];
+				if (bur.z[0] * bur.z[0] + bur.z[1] * bur.z[1] > 4)
 					break ;
+				bur.z[0] = bur.temp[0];
+				bur.z[1] = bur.temp[1];				
 				i++;
 			}
 			set_pixel(x, y, i, thr);

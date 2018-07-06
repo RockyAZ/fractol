@@ -32,6 +32,13 @@ void	ft_some_keys(int key, t_win *win)
 			win->thread[i].color_id = 0;
 		i++;
 	}
+	if (key == KEY_TAB)
+	{
+		win->fract_id += 1;
+		if (win->fract_id > FRACTOLS)
+			win->fract_id = 1;
+	}
+
 }
 
 void	ft_iter_size(int key, t_win *win)
@@ -56,7 +63,7 @@ void	ft_iter_size(int key, t_win *win)
 		{
 			if (win->thread[i].iter > 0 && win->thread[i].iter < 120)
 				win->thread[i].iter -= 1;
-			else if (win->thread[i].iter > 121 && win->thread[i].iter < 300)
+			else if (win->thread[i].iter > 121)
 				win->thread[i].iter -= 18;
 		}
 		i++;
@@ -76,20 +83,24 @@ void	ft_scal_coord(int key, t_win *win)
 		{
 			bul = 1;
 			win->thread[i].zoom = win->zooms[win->zoom_id + 1];
-			win->move_size /= 1.011;
 		}
 		else if (key == KEY_MINUS && win->zoom_id - 1 >= 0)
 		{
 			bul = -1;
 			win->thread[i].zoom = win->zooms[win->zoom_id - 1];
-			win->move_size *= 1.011;
 		}
 		i++;
 	}
 	if (bul == 1)
+	{
 		win->zoom_id++;
+		win->move_size /= 1.1109;
+	}
 	else if (bul == -1 && win->zoom_id - 1 >= 0)
+	{
 		win->zoom_id--;
+		win->move_size *= 1.1109;
+	}
 }
 
 void	ft_move_coord(int key, t_win *win)
@@ -125,11 +136,13 @@ int		ft_keyhook(int key, t_win *win)
 		mandelbrot(win);
 	else if (win->fract_id == 3)
 		julia_3d(win);
+	else if (win->fract_id == 4)
+		burningship(win);
 	return (0);
 }
+////////////////////////////
 /*
-normal reboot            [V]
-normal color changer     [Y]
 normal mouse-zoom        [X]
 epilepsy warning         [X]
 */
+////////////////////////////

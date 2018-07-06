@@ -36,13 +36,25 @@ void	set_pixel(int x, int y, int i, t_thread *thr)
 	what_color(thr, p, i);
 }
 
+void	ft_str_what_fractal(t_win *win)
+{
+	if (win->fract_id == 1)
+		mlx_string_put(win->mlx_ptr, win->win_ptr, 80, 0, RED, "JULIA");
+	else if ( win->fract_id == 2)
+		mlx_string_put(win->mlx_ptr, win->win_ptr, 80, 0, RED, "MANDELBROT");
+	else if ( win->fract_id == 3)
+		mlx_string_put(win->mlx_ptr, win->win_ptr, 80, 0, RED, "3D JULIA");
+	else if ( win->fract_id == 4)
+		mlx_string_put(win->mlx_ptr, win->win_ptr, 80, 0, RED, "BURNINGSHIP");
+}
+
 void	ft_str_window(t_win *win)
 {
 	char *iter;
 	char *thread;
 
 	mlx_string_put(win->mlx_ptr, win->win_ptr, 0, 0, RED, "FRACTAL:");
-	mlx_string_put(win->mlx_ptr, win->win_ptr, 80, 0, RED, win->name);
+	ft_str_what_fractal(win);
 	mlx_string_put(win->mlx_ptr, win->win_ptr, 0, 20, GREEN, "ITERATIONS:");
 	mlx_string_put(win->mlx_ptr, win->win_ptr, 120, 20, GREEN, iter = ft_itoa(win->thread[0].iter));
 	mlx_string_put(win->mlx_ptr, win->win_ptr, 0, 40, BLUE, "THREADS:");
