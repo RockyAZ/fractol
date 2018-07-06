@@ -18,7 +18,8 @@ void	make_zoom(t_win *win)
 	double	cp;
 
 	i = 0;
-	cp = 0.3;
+    //0.3
+	cp = 0.5;
 	while (i < ZOOM)
 	{
 		win->zooms[i] = cp;
@@ -56,8 +57,8 @@ int		make_threads_color(int i)
 
 void	make_thread(t_win *win)
 {
-	int         i;
-	int         dive;
+	int i;
+	int dive;
 
 	i = 0;
 	dive = HEIGHT / THREAD;
@@ -66,7 +67,8 @@ void	make_thread(t_win *win)
 		win->thread[i].y = i * dive;
 		win->thread[i].lim_y = win->thread[i].y + dive;
 		win->thread[i].iter = 80;
-		win->thread[i].zoom = 0.3;
+        //0.3
+		win->thread[i].zoom = 0.5;
 		win->thread[i].move_x = 0;
 		win->thread[i].move_y = 0;
 		win->thread[i].mouse.x = WIDTH / 2;
@@ -74,10 +76,18 @@ void	make_thread(t_win *win)
 		win->thread[i].dive = dive;
 		if (win->thr_color == 1 && (win->fract_id == 1 || win->fract_id == 3))
 			win->thread[i].color_id = make_threads_color(i);
-		else if (win->thr_color == -1 && !win->first_color)
+		else if (win->thr_color == -1)
 			win->thread[i].color_id = 5;
 		i++;
 	}
-    win->first_color = 1;
 	make_win(win);
+}
+
+double	make_complex(int x, int y, t_win *win, char c)
+{
+	if (c == 'r')
+		return (1.5 * (x - WIDTH / 2) / (win->thread->zoom * WIDTH));
+	if (c == 'i')
+			return ((y - HEIGHT / 2) / (win->thread->zoom * HEIGHT));
+	return (-1);
 }

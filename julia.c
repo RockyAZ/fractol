@@ -27,8 +27,8 @@ void	*thread_julia(void *wi)
 		x = 0;
 		while (x < WIDTH)
 		{
-			jul.rn[1] = 1.5 * (x - WIDTH / 2) / (0.5 * thr->zoom * WIDTH) + thr->move_x;
-			jul.in[1] = (y - HEIGHT / 2) / (0.5 * thr->zoom * HEIGHT) + thr->move_y;
+			jul.rn[1] = 1.5 * (x - WIDTH / 2) / (thr->zoom * WIDTH) + thr->move_x;
+			jul.in[1] = (y - HEIGHT / 2) / (thr->zoom * HEIGHT) + thr->move_y;
 			i = 0;
 			while (i < thr->iter)
 			{

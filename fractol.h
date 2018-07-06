@@ -20,7 +20,7 @@
 # define WIDTH 1200
 # define HEIGHT 800
 
-# define THREAD 8
+# define THREAD 16
 # define ZOOM 700
 # define COLORS 6
 # define FRACTOLS 4
@@ -89,13 +89,13 @@ typedef struct		s_thread
 	double			buf_i;
 	int				color_id;	
 }					t_thread;
+
 /*
 **	win->fract_id == 1 -> JULIA
 **	win->fract_id == 2 -> MANDELBROT
 **	win->fract_id == 3 -> 3D JULIA
 **	win->fract_id == 4 -> BURNINGSHIP
 */
-
 typedef struct		s_win
 {
     void			*mlx_ptr;
@@ -115,7 +115,6 @@ typedef struct		s_win
 	int				zoom_id;
 	double			move_size;
 	int				thr_color;
-	int				first_color;
 }					t_win;
 
 /*
@@ -162,4 +161,5 @@ void				make_zoom(t_win *win);
 void				make_win(t_win *win);
 int					make_threads_color(int i);
 void				make_thread(t_win *win);
+double				make_complex(int x, int y, t_win *win, char c);
 #endif

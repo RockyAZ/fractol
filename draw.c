@@ -64,7 +64,7 @@ void	ft_str_window(t_win *win)
 	else if (win->mouse_julia == -1)
 		mlx_string_put(win->mlx_ptr, win->win_ptr, 0, 60, PINK, "MOUSE OFF");
 	free(iter);
-	mlx_string_put(win->mlx_ptr, win->win_ptr, 0, 80, BLUE, "ZOOM:");	
+	mlx_string_put(win->mlx_ptr, win->win_ptr, 0, 80, BLUE, "ZOOM:");
 	mlx_string_put(win->mlx_ptr, win->win_ptr, 50, 80, BLUE, iter = ft_itoa((int)win->thread[0].zoom));
 	free(iter);
 	free(thread);
@@ -75,5 +75,5 @@ void	drawing(t_win *win)
 	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img_ptr, 0, 0);
 	if (win->is_text == 1)
 		ft_str_window(win);
-	mlx_destroy_image(win->mlx_ptr, win->img_ptr);
+//	mlx_destroy_image(win->mlx_ptr, win->img_ptr);
 }

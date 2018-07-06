@@ -48,7 +48,6 @@ void		main_preparation(t_win *win, char *av)
 	if (HEIGHT / THREAD * THREAD != HEIGHT || THREAD < 1)
 		error("invalid number of threads");
 	win->thr_color = -1;
-	win->first_color = 0;
 	make_thread(win);
 	make_zoom(win);
 	what_fractal(win, av);
