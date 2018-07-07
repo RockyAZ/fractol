@@ -15,5 +15,6 @@
 void	error(char *str)
 {
 	ft_putendl(str);
+	system("leaks fractol");
 	exit(EXIT_FAILURE);
 }

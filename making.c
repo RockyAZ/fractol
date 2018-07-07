@@ -35,6 +35,7 @@ void	make_win(t_win *win)
 	win->mouse_julia = 1;
 	win->zoom_id = 0;
 	win->move_size = 0.2;
+	win->left_shift = 0;
 }
 
 int		make_threads_color(int i)
@@ -71,8 +72,8 @@ void	make_thread(t_win *win)
 		win->thread[i].zoom = 0.5;
 		win->thread[i].move_x = 0;
 		win->thread[i].move_y = 0;
-		win->thread[i].mouse.x = WIDTH / 2;
-		win->thread[i].mouse.y = HEIGHT / 2;
+		win->thread[i].mouse.x = 0;
+		win->thread[i].mouse.y = 0;
 		win->thread[i].dive = dive;
 		if (win->thr_color == 1 && (win->fract_id == 1 || win->fract_id == 3))
 			win->thread[i].color_id = make_threads_color(i);

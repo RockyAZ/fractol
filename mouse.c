@@ -12,19 +12,16 @@
 
 #include "fractol.h"
 
-void	scaling_mouse(int x, int y, t_win *win)
+void	calling_fractal(t_win *win)
 {
-	int i;
-
-	i = 0;
-	while (i < THREAD)
-	{
-		win->thread[i].zoom = win->zooms[win->zoom_id + 1];
-		i++;
-	}
-	win->zoom_id++;
-	win->move_size /= 1.1109;
-
+	if (win->fract_id == 1 && (win->mouse_julia == 1 || win->mouse_down == 1))
+		julia(win);
+	if (win->fract_id == 3 && (win->mouse_julia == 1 || win->mouse_down == 1))
+		julia_3d(win);
+	if (win->fract_id == 2)
+		mandelbrot(win);
+	if (win->fract_id == 4)
+		burningship(win);
 }
 
 int		mouse_down(int button, int x, int y, t_win *win)
@@ -42,10 +39,14 @@ int		mouse_up(int button, int x, int y, t_win *win)
 	win->mouse_down = 0;
 	if (x == win->mouse_button.x && y == win->mouse_button.y)
 	{
-		scaling_mouse(x, y, win);
+		if (win->left_shift)
+			ft_scal_coord(KEY_MINUS, win);
+		else if (!win->left_shift)
+			ft_scal_coord(KEY_PLUS, win);
 	}
 	win->mouse_button.x = x;
 	win->mouse_button.y = y;
+	calling_fractal(win);
 	return (0);
 }
 
@@ -72,7 +73,7 @@ int		mouse_move(int x, int y, t_win *win)
 	i = 0;
 	while (i < THREAD)
 	{
-		if ((win->fract_id == 1 || win->fract_id == 3) && win->fract_id == 1 && win->mouse_down == 0)
+		if ((win->fract_id == 1 || win->fract_id == 3) && win->mouse_down == 0 && win->mouse_julia == 1)
 		{
 			win->thread[i].buf_r = make_complex(win->thread[i].mouse.x, 0, win, 'r');
 			win->thread[i].buf_i = make_complex(0, win->thread[i].mouse.y, win, 'i');
@@ -81,9 +82,6 @@ int		mouse_move(int x, int y, t_win *win)
 		win->thread[i].mouse.y = y;
 		i++;
 	}
-	if (win->fract_id == 1 && (win->mouse_julia == 1|| win->mouse_down == 1))
-		julia(win);
-	if (win->fract_id == 3 && (win->mouse_julia == 1|| win->mouse_down == 1))
-		julia_3d(win);
+	calling_fractal(win);
 	return (0);
 }

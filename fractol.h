@@ -20,7 +20,7 @@
 # define WIDTH 1200
 # define HEIGHT 800
 
-# define THREAD 16
+# define THREAD 8
 # define ZOOM 700
 # define COLORS 6
 # define FRACTOLS 4
@@ -115,6 +115,7 @@ typedef struct		s_win
 	int				zoom_id;
 	double			move_size;
 	int				thr_color;
+	int				left_shift;
 }					t_win;
 
 /*

@@ -25,6 +25,8 @@ void	ft_some_keys(int key, t_win *win)
 		win->thr_color *= -1;
 	if (key == KEY_SPACE)
 		win->mouse_julia *= -1;
+	if (key == KEY_SHIFT_LEFT)
+		win->left_shift = 1;
 	while (key == KEY_ENTER && i < THREAD)
 	{
 		win->thread[i].color_id += 1;
