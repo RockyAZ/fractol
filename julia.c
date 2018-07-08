@@ -1,55 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandelbrot.c                                       :+:      :+:    :+:   */
+/*   julia.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azaporoz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/19 17:21:48 by azaporoz          #+#    #+#             */
-/*   Updated: 2018/06/19 17:21:48 by azaporoz         ###   ########.fr       */
+/*   Created: 2018/06/21 13:39:19 by azaporoz          #+#    #+#             */
+/*   Updated: 2018/06/21 13:39:20 by azaporoz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	make_mandel_first(int x, int y, t_mandel *m, t_thread *t)
+int		make_jl(t_julia *jl, t_thread *thr)
 {
-	m->buf_r = 1.5 * (x - WIDTH / 2) / (0.5 * t->zoom * WIDTH) + t->move_x;
-	m->buf_i = (y - HEIGHT / 2) / (0.5 * t->zoom * HEIGHT) + t->move_y;
-	m->rn[1] = 0;
-	m->in[1] = 0;
-}
-
-int		make_mandel_second(t_mandel *man)
-{
-	man->rn[0] = man->rn[1];
-	man->in[0] = man->in[1];
-	man->rn[1] = man->rn[0] * man->rn[0] - man->in[0] * man->in[0] + man->buf_r;
-	man->in[1] = 2 * man->rn[0] * man->in[0] + man->buf_i;
-	if ((man->rn[1] * man->rn[1] + man->in[1] * man->in[1]) > 4)
+	jl->rn[0] = jl->rn[1];
+	jl->in[0] = jl->in[1];
+	jl->rn[1] = ((jl->rn[0] * jl->rn[0]) -
+	(jl->in[0] * jl->in[0])) + thr->buf_r;
+	jl->in[1] = 2 * jl->rn[0] * jl->in[0] + thr->buf_i;
+	if ((jl->rn[1] * jl->rn[1] + jl->in[1] * jl->in[1]) > 4)
 		return (0);
 	return (1);
 }
 
-void	*thread_mandelbrot(void *wi)
+void	*thread_julia(void *wi)
 {
-	t_mandel	man;
+	t_julia		jl;
 	t_thread	*thr;
+	int			i;
 	int			x;
 	int			y;
-	int			i;
 
 	thr = (t_thread*)wi;
 	y = thr->y;
-	while (y < HEIGHT)
+	while (y < thr->lim_y)
 	{
 		x = -1;
 		while (++x < WIDTH)
 		{
-			make_mandel_first(x, y, &man, thr);
+			jl.rn[1] = 1.5 * (x - WIDTH / 2) / (thr->zoom * WIDTH)
+			+ thr->move_x;
+			jl.in[1] = (y - HEIGHT / 2) / (thr->zoom * HEIGHT) + thr->move_y;
 			i = -1;
 			while (++i < thr->iter)
-				if (!make_mandel_second(&man))
+				if (!make_jl(&jl, thr))
 					break ;
 			set_pixel(x, y, i, thr);
 		}
@@ -58,7 +53,7 @@ void	*thread_mandelbrot(void *wi)
 	return (0);
 }
 
-void	mandelbrot(t_win *win)
+void	julia(t_win *win)
 {
 	int			i;
 	pthread_t	tid[THREAD];
@@ -67,7 +62,7 @@ void	mandelbrot(t_win *win)
 	prepare_draw(win);
 	while (i < THREAD)
 	{
-		pthread_create(&tid[i], NULL, &thread_mandelbrot, &win->thread[i]);
+		pthread_create(&tid[i], NULL, &thread_julia, &win->thread[i]);
 		i++;
 	}
 	i = 0;

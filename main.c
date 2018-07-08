@@ -12,15 +12,38 @@
 
 #include "fractol.h"
 
-int main(int ac, char **av)
+int	ft_exit(t_win *win)
 {
-    t_win *win;
+	(void)win;
+	exit(EXIT_SUCCESS);
+	return (0);
+}
 
-	win = (t_win*)malloc(sizeof(t_win));
-	win->mlx_ptr = mlx_init();
-	win->win_ptr = mlx_new_window(win->mlx_ptr, WIDTH, HEIGHT, "THE WINDOW");
-	win->center_x = WIDTH / 2;
-	win->center_y = HEIGHT / 2;
-	mandelbrot(win);
+int	ft_up_keyhook(int key, t_win *win)
+{
+	if (key == KEY_SHIFT_LEFT)
+		win->left_shift = 0;
+	return (0);
+}
+
+int	main(int ac, char **av)
+{
+	t_win *win;
+
+	if (ac == 1 || ac > 3)
+	{
+		error("invalid number of arguments\
+		\nUsage:   ./fractol [name of fractal]");
+		return (0);
+	}
+	if ((win = (t_win*)malloc(sizeof(t_win))) == NULL)
+		error("t_win malloc error");
+	main_preparation(win, av[1]);
+	mlx_hook(win->win_ptr, 2, 0, &ft_keyhook, (void*)win);
+	mlx_hook(win->win_ptr, 3, 0, &ft_up_keyhook, (void*)win);
+	mlx_hook(win->win_ptr, 17, 0, &ft_exit, (void*)win);
+	mlx_hook(win->win_ptr, 4, 0, &mouse_down, (void*)win);
+	mlx_hook(win->win_ptr, 5, 0, &mouse_up, (void*)win);
+	mlx_hook(win->win_ptr, 6, 0, &mouse_move, (void*)win);
 	mlx_loop(win->mlx_ptr);
 }

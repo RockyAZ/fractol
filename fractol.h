@@ -13,31 +13,155 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
+/*
+** 2500
+** 1300
+*/
 # define WIDTH 1200
 # define HEIGHT 800
 
+# define THREAD 8
+# define ZOOM 700
+# define COLORS 6
+# define FRACTOLS 4
+
+/*
+** COLORS IN MLX_IMAGE:
+** 1->blue
+** 2->green
+** 3->red
+*/
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
+# define WHITE 0xFFFFFF
+# define RED 0xff170f
+# define GREEN 0x00FF00
+# define BLUE 0x0000FF
+# define PINK 0xFF00FF
+# define YELLOW 0xfff305
 
-#include "./libft/libft.h"
-#include <mlx.h>
-#include <math.h>
-//#include <pthread.h>
+# include "./libft/libft.h"
+# include "keys.h"
+# include <mlx.h>
+# include <math.h>
+# include <pthread.h>
 
-typedef struct	s_mandel
+typedef struct		s_mouse
 {
-	int			lim_x[2];
-	int			lim_y[2];
-}				t_mandel;
+	int				x;
+	int				y;
+}					t_mouse;
 
-typedef struct	s_win
+typedef struct		s_julia
 {
-    void		*mlx_ptr;
-	void		*win_ptr;
-	int			center_x;
-	int			center_y;	
-}				t_win;
+	double			rn[2];
+	double			in[2];
+}					t_julia;
 
-void	mandelbrot(t_win *win);
+typedef struct		s_burning
+{
+	double			z[2];
+	double			c[2];
+	double			temp[2];
+}					t_burning;
 
+typedef struct		s_mandel
+{
+	double			rn[2];
+	double			in[2];
+	double			buf_r;
+	double			buf_i;
+}					t_mandel;
+
+typedef struct		s_thread
+{
+	int				y;
+	int				lim_y;
+	int				dive;
+	int				size_line;
+	unsigned char	*img_ptr;
+	int				iter;
+	double			zoom;
+	double			move_x;
+	double			move_y;
+	t_mouse			mouse;
+	double			buf_r;
+	double			buf_i;
+	int				color_id;
+}					t_thread;
+
+/*
+**	win->fract_id == 1 -> JULIA
+**	win->fract_id == 2 -> MANDELBROT
+**	win->fract_id == 3 -> 3D JULIA
+**	win->fract_id == 4 -> BURNINGSHIP
+*/
+typedef struct		s_win
+{
+	void			*mlx_ptr;
+	void			*win_ptr;
+	void			*img_ptr;
+	int				bpp;
+	int				size_line;
+	int				endian;
+	unsigned char	*ptr;
+	int				m_down;
+	t_mouse			mouse_button;
+	int				mouse_julia;
+	int				is_text;
+	int				fract_id;
+	t_thread		thread[THREAD];
+	double			zooms[ZOOM];
+	int				zoom_id;
+	double			move_size;
+	int				thr_color;
+	int				left_shift;
+}					t_win;
+
+/*
+**	main functions
+*/
+void				mandelbrot(t_win *win);
+void				julia(t_win *win);
+void				julia_3d(t_win *win);
+void				burningship(t_win *win);
+
+/*
+** drawing
+*/
+void				prepare_draw(t_win *win);
+void				set_pixel(int x, int y, int i, t_thread *win);
+void				drawing(t_win *win);
+
+/*
+**	helper && error
+*/
+void				main_preparation(t_win *win, char *av);
+void				error(char *str);
+void				what_color(t_thread *thr, int p, int i);
+int					ft_exit(t_win *win);
+void				scal_size_changer(t_win *win, int bul);
+
+/*
+**	mooving && scaling
+*/
+void				ft_scal_coord(int key, t_win *win);
+void				ft_move_coord(int key, t_win *win);
+
+/*
+** mouse & keys
+*/
+int					mouse_down(int button, int x, int y, t_win *win);
+int					mouse_up(int button, int x, int y, t_win *win);
+int					mouse_move(int x, int y, t_win *win);
+int					ft_keyhook(int key, t_win *win);
+
+/*
+** making
+*/
+void				make_zoom(t_win *win);
+void				make_win(t_win *win);
+int					make_threads_color(int i);
+void				make_thread(t_win *win);
+double				mk_cx(int x, int y, t_win *win, char c);
 #endif

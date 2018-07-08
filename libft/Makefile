@@ -6,7 +6,7 @@
 #    By: azaporoz <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/27 18:52:16 by azaporoz          #+#    #+#              #
-#    Updated: 2018/06/04 20:33:08 by azaporoz         ###   ########.fr        #
+#    Updated: 2018/06/25 20:07:23 by azaporoz         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -80,20 +80,26 @@ SOURCE = ft_atoi.c \
 			ft_count_words.c \
 			ft_max.c \
 			ft_min.c \
+			ft_putnbr_end.c \
+
 
 HEADER = ./libft.h
 OBJECTS = $(SOURCE:.c=.o)
 NAME = libft.a
 RM = rm -f
 
-all: $(NAME)
+all: print $(NAME)
+	@printf "\033[0;32m\n\n\nLIBFT DONE\n\n"
+
+print:
+	@printf "\033[0;32mSTART LOADING LIBFT\n\n\n"
 
 $(NAME): $(OBJECTS)
 	@ar rc $(NAME) $(OBJECTS)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
-		@printf "\033[0;31m >_<\n"
+		@printf "\033[0;31m ->"
 clean:
 	@$(RM) $(OBJECTS)
 	@printf "\033[0;35m\
